@@ -9,21 +9,21 @@ public class Gladiator {
 	
 	private String fullName;
 	private int strength;
-	private int levelOfDamage;
+	private int health;
 	private boolean alive;
 	
 	//Constructor
 	
-	public Gladiator(String fullName, int strength, int levelOfDamage, boolean alive) {
-
+	public Gladiator(String fullName, int strength, int health, boolean alive) {
+		
 		this.fullName = fullName;
 		this.strength = strength;
-		this.levelOfDamage = levelOfDamage;
+		this.health = health;
 		this.alive = alive;
 	}
 	
 	public Gladiator(String fullName, int strength, boolean alive) {
-
+		
 		this.fullName = fullName;
 		this.strength = strength;
 		this.alive = alive;
@@ -32,6 +32,8 @@ public class Gladiator {
 	public Gladiator () {}
 
 	//Getters and setters
+	
+	
 	
 	public String getFullName() {
 		return fullName;
@@ -49,12 +51,12 @@ public class Gladiator {
 		this.strength = strength;
 	}
 
-	public int getLevelOfDamage() {
-		return levelOfDamage;
+	public int getHealth() {
+		return health;
 	}
 
-	public void setLevelOfDamage(int levelOfDamage) {
-		this.levelOfDamage = levelOfDamage;
+	public void setHealth(int health) {
+		this.health = health;
 	}
 
 	public boolean isAlive() {
@@ -67,5 +69,6 @@ public class Gladiator {
 	
 	
 	//Methods
+	
 
 }

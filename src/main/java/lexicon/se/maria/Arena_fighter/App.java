@@ -2,6 +2,8 @@ package lexicon.se.maria.Arena_fighter;
 
 import java.util.Scanner;
 
+import lexicon.se.maria.randomgenerator.RandomNumberGenerator;
+
 /*******************
  *                 *
  * Arena Fighter!  *
@@ -31,7 +33,9 @@ public class App {
 	
 	private static String getStringFromUser() {					//method getStringFromUser	
 		String text = scanner.nextLine();
-		//Kolla igenom inhämtningen från playern om jag kan förbättra den med ngn kontroll
+		
+		//Maybe do a control here for checking if you got a name or just an Enter, tab etc.
+		//Not so importent for now, according to Erik.
 		
 		return text;
 	}
@@ -51,24 +55,14 @@ public class App {
 		return number;
 	}
 	
+	
+	
 //****************************** MAIN *************************************
 	
     public static void main( String[] args ){
     	boolean valid;
     	String nameOfPlayer;
     	
-    	//Declaration of Gladiators
-    	Gladiator titan = new Gladiator("Titan", 6, 0, true);
-		Gladiator omnius = new Gladiator("Omnius", 4, 0, true);
-		Gladiator homerus = new Gladiator("Homerus", 5, 0, true);
-		Gladiator hercules = new Gladiator("Hercules", 6, 0, true);
-		Gladiator atlas = new Gladiator("Atlas", 5, 0, true);
-		Gladiator gladius = new Gladiator("Gladius", 4, 0, true);
-		
-		//Declaration of Players own Gladiator
-		Gladiator player = new Gladiator ();
-		player.setLevelOfDamage(0);
-    	player.setAlive(true);
     	
     	
     	System.out.println("****************************************\n"
@@ -80,52 +74,29 @@ public class App {
 		
 		if (valid) {					//Player wants to play
 			
-			System.out.println("Your opponents:");
-			System.out.println("Gladiator: \t Name: "+ titan.getFullName() + " \t Strength: "+ titan.getStrength());
-			System.out.println("Gladiator: \t Name: "+ omnius.getFullName() + " \t Strength: "+ omnius.getStrength());
-			System.out.println("Gladiator: \t Name: "+ homerus.getFullName() + " \t Strength: "+ homerus.getStrength());
-			System.out.println("Gladiator: \t Name: "+ hercules.getFullName() + "  Strength: "+ hercules.getStrength());
-			System.out.println("Gladiator: \t Name: "+ atlas.getFullName() + " \t Strength: "+ atlas.getStrength());
-			System.out.println("Gladiator: \t Name: "+ gladius.getFullName() + " \t Strength: "+ gladius.getStrength() + "\n");
+			//Declaration of Players own Gladiator
 			
 			System.out.println("You will now create your own gladiator ");
+			Gladiator player = new Gladiator ();
+			player.setHealth(4);
+	    	player.setAlive(true);
+			
 			System.out.println("Enter your Gladiators Full Name");	
 			nameOfPlayer = getStringFromUser();
 			player.setFullName(nameOfPlayer);
 			
-			System.out.println("Enter your Gladiators Strength");	
+			System.out.println("Enter your Gladiators Strength (1-6)");	
 			player.setStrength(getIntFromUser());
 	    	System.out.println("Player: \t Name: "+ player.getFullName() + " \t Strength: "+ player.getStrength() + "\n");
 	    	
-	    	//---------------------First Battle-----------------------------
+	    	Battle battle = new Battle();
+	    	battle.printGladiators();
+	    	battle.setPlayer(player);
+	    	battle.chooseOpponent();
 	    	
-//	    	Let the dice decide - who are the opponent?
-//	    	Example of opponent Gladiator - "Homerus"
-	    	
-	    	Battle firstBattle = new Battle(player, homerus);
-	    	
-	    	System.out.println("First battle: " + firstBattle.getPlayerName() + " versus " + firstBattle.getOpponentName());
-	       	
-	    	//-----------------------First Round---------------------------------------------
-	    	
-	    	//Round firstRound = new Round ();
-	    	// Get the strength of the gladiators
-	    	
-	    	//System.out.println("First Round:\t" + player.getFullName() + " Strengt: " + player.getStrength() + "\t" 
-	    	//				+ homerus.getFullName() + " Strengt: " + homerus.getStrength());
-	    	
-	    	// Player roll the dice
-	    	// New strength: player strength + value of the dice
-	    	// player.setStrength = New Strength
-	    	
-	    	// Opponent rolls the dice
-	    	// New strength: opponent strength + value of the dice
-	    	// homerus.setStrength = New Strength
-	    	
-	    	//if (player.getStrength() < homerus.getStrength()) {
-	    		//System.out.println("Winner is:" + "...");
-	    	//}
-	    	
+	    	System.out.println("Battle: " + battle.getPlayerName() + " versus " + battle.getOpponentName() + "\n");
+	    	battle.startBattle();
+	    	System.out.println("Back in the main class");
 	    	
 		}else {							//Player do NOT want to play
 			System.out.println("Welcome back!"); 				
