@@ -62,8 +62,7 @@ public class App {
     public static void main( String[] args ){
     	boolean valid;
     	String nameOfPlayer;
-    	
-    	
+  
     	
     	System.out.println("****************************************\n"
     					 + "*   Arena Fighter - a Gladiator game   *\n"
@@ -78,7 +77,7 @@ public class App {
 			
 			System.out.println("You will now create your own gladiator ");
 			Gladiator player = new Gladiator ();
-			player.setHealth(4);
+			player.setHealth(10);
 	    	player.setAlive(true);
 			
 			System.out.println("Enter your Gladiators Full Name");	
@@ -88,16 +87,21 @@ public class App {
 			System.out.println("Enter your Gladiators Strength (1-6)");	
 			player.setStrength(getIntFromUser());
 	    	System.out.println("Player: \t Name: "+ player.getFullName() + " \t Strength: "+ player.getStrength() + "\n");
+	    	do {		//Creating and setting the states of a battle
+	    		
+	    		Battle battle = new Battle();
+	    		battle.printGladiators();
+	    		battle.setPlayer(player);
+	    		
+	    		battle.chooseOpponent();		//randomized choice of opponent
+	    		
+	    		String[] log = new String [11];
+	    		battle.setLog(log);
 	    	
-	    	Battle battle = new Battle();
-	    	battle.printGladiators();
-	    	battle.setPlayer(player);
-	    	battle.chooseOpponent();
-	    	
-	    	System.out.println("Battle: " + battle.getPlayerName() + " versus " + battle.getOpponentName() + "\n");
-	    	battle.startBattle();
-	    	System.out.println("Back in the main class");
-	    	
+	    		System.out.println("Battle: " + battle.getPlayerName() + " versus " + battle.getOpponentName() + "\n");
+	    		battle.startBattle();			//Start Battle
+	    		
+	    	}while (player.isAlive());
 		}else {							//Player do NOT want to play
 			System.out.println("Welcome back!"); 				
 		}

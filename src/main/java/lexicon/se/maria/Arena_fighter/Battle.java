@@ -8,10 +8,6 @@ import lexicon.se.maria.randomgenerator.RandomNumberGenerator;
  * as well as references to both the      
  * player and the opponent                
  * 
- * Matchen skapar och loggar ronder, 
- * håller reda på hälsan och om spelarna 
- * fortfarande lever. Så länge gladiatorerna 
- * lever skapas nya ronder.
  * ****************************************/
 
 public class Battle {
@@ -38,12 +34,12 @@ public class Battle {
 	
 	//Declaration of Gladiators
 	
-	Gladiator titan = new Gladiator("Titan", 6, 4, true);
-	Gladiator omnius = new Gladiator("Omnius", 4, 3, true);
-	Gladiator homerus = new Gladiator("Homerus", 5, 2, true);
-	Gladiator hercules = new Gladiator("Hercules", 6, 5, true);
-	Gladiator atlas = new Gladiator("Atlas", 5, 1, true);
-	Gladiator gladius = new Gladiator("Gladius", 4, 6, true);
+	Gladiator titan = new Gladiator("Titan", 6, 10, true);
+	Gladiator omnius = new Gladiator("Omnius", 4, 5, true);
+	Gladiator homerus = new Gladiator("Homerus", 5, 7, true);
+	Gladiator hercules = new Gladiator("Hercules", 6, 6, true);
+	Gladiator atlas = new Gladiator("Atlas", 5, 8, true);
+	Gladiator gladius = new Gladiator("Gladius", 4, 4, true);
 
 	
 
@@ -62,6 +58,7 @@ public class Battle {
 	
 	public void chooseOpponent(){
 		RandomNumberGenerator rng = RandomNumberGenerator.getInstance();
+		
 		D6 = (rng.getRandomIntBetween(1, 6));
 		
 			if (D6 == 1) {
@@ -77,7 +74,7 @@ public class Battle {
 			}else if (D6 ==6) {
 				setOpponent(gladius);
 			}
-			
+		
 		return;
 	}
 	
@@ -86,11 +83,14 @@ public class Battle {
 	public void startBattle() {
 		do {
 			log[roundNumber] = new Round().getResult((roundNumber + 1), player, opponent);
-			System.out.println(log[roundNumber]);
+			//System.out.println(log[roundNumber]);
 			roundNumber ++;
 		}while(player.isAlive() && opponent.isAlive() && roundNumber < 10);		
-		
-	}
+		System.out.println("\nResult:");
+		for (int i = 0; i < roundNumber; i++){
+			System.out.println("Round " + (i+1) + ":" + log[i]);
+			}
+		}
 	
 	//Getters and setters
 	
@@ -128,6 +128,14 @@ public class Battle {
 
 		public void setOpponent(Gladiator opponent) {
 			this.opponent = opponent;
+		}
+
+		public String[] getLog() {
+			return log;
+		}
+
+		public void setLog(String[] log) {
+			this.log = log;
 		}
 
 		

@@ -10,17 +10,14 @@ import lexicon.se.maria.randomgenerator.RandomNumberGenerator;
  **************************************************/
 
 public class Round {
-	//Fields
-	private String winner;
-
 	
 	//Constructors
-	public Round() {
-		this.winner = "";
+	public Round() {	
 	}
 	
-	
+	int DicePlayer, DiceOpponent;
 	int newPlayerStrength, newOpponentStrength;
+	String result;
 	Gladiator player, opponent;
 	
 	//Methods
@@ -32,27 +29,48 @@ public class Round {
 		return D6;
 	}
 	
-	public String calculateWinner(int newPlayerStrength, int newOpponentStrength) {
+	public String calculateWinner(Gladiator player, Gladiator opponent) {
 		if (newPlayerStrength > newOpponentStrength) {
-			//System.out.println("\nWinner is: " + player.getFullName());
-			this.winner = player.getFullName();
-		
-		}else if(newPlayerStrength < newOpponentStrength){
-			//System.out.println("\nWinner is: " + opponent.getFullName());
-			this.winner = opponent.getFullName();
-		}else {
+			System.out.println("\nWinner is: " + player.getFullName());
+			result = player.getFullName();
 			
-			//System.out.println("\nNo winner - the results are equal");
-			this.winner = "No winner";
+			//Player Gladiator knocks opponent Gladiator
+			DicePlayer = rollDice();		//How hard is the punch?
+			System.out.println(player.getFullName() + " knocks " + opponent.getFullName() + " with a strength of " + DicePlayer);
+			int opponentHealth = opponent.getHealth() - DicePlayer;
+			opponent.setHealth(opponentHealth);
+			if (opponentHealth <= 0) {
+				opponent.setAlive(false);
+				System.out.println(opponent.getFullName() + " is dead");
+			}
+		}else if(newPlayerStrength < newOpponentStrength){
+			System.out.println("\nWinner is: " + opponent.getFullName());
+			result = opponent.getFullName();
+			
+			//Opponent Gladiator knocks player Gladiator
+			DiceOpponent = rollDice();		//How hard is the punch?
+			System.out.println(opponent.getFullName() + " knocks " + player.getFullName() + " with a strength of " + DiceOpponent);
+			
+			int playerHealth = player.getHealth() - DicePlayer;
+			player.setHealth(playerHealth);
+			if (playerHealth <= 0) {
+				player.setAlive(false);
+				System.out.println(player.getFullName() + " is dead");
+			}
+		}else {
+			System.out.println("\nNo winner - the results are equal");
+			result = "No winner";
 		}
-		return this.winner;
+		return result;
 	}
+	
+	
 
 	public String getResult(int roundNumber, Gladiator player, Gladiator opponent) {
 		
 		// Printing out each gladiators strength before the fight
 		
-		System.out.println("Round: " + (roundNumber) + "\tStrength before the fight\n" 
+		System.out.println("\nRound: " + (roundNumber) + "\tStrength before the fight\n" 
 				 + "******************************************\n" 
 				 + player.getFullName() + "\tStrengt: " + player.getStrength() + "\n" 
 				 + opponent.getFullName() + "\tStrengt: " + opponent.getStrength());
@@ -60,11 +78,11 @@ public class Round {
 		
 		// ******************* The fight - Rolling the dices ************************
 		
-		int DicePlayer = rollDice();				// Player rolls the dice
+		DicePlayer = rollDice();				// Player rolls the dice
 		System.out.println(player.getFullName() + " gets the value of: " + DicePlayer);
 		newPlayerStrength = player.getStrength() + DicePlayer;
 		
-		int DiceOpponent = rollDice();				// Opponent rolls the dice
+		DiceOpponent = rollDice();				// Opponent rolls the dice
 		System.out.println(opponent.getFullName() + " gets the value of: " + DiceOpponent);
 		newOpponentStrength = opponent.getStrength() + DiceOpponent;
 		
@@ -72,16 +90,16 @@ public class Round {
 
 		// Printing out each gladiators strength after the fight
 		
-		System.out.println("\nResult round: \n*********************\n" 
+		System.out.println("\nResult round: " + roundNumber + " - Strength after the dice roll "
+							+"\n***********************************************\n" 
 							+ player.getFullName() + " New Strength: " + newPlayerStrength + "\n" 
 							+ opponent.getFullName() + " New Strength: " + newOpponentStrength);
 		
 		//Calculating who is the winner
-		calculateWinner(newPlayerStrength, newOpponentStrength);
+		result = calculateWinner(player, opponent);
 		
-		return calculateWinner(newPlayerStrength, newOpponentStrength);
+	return result;
 	}
 
-	
 	
 }
